@@ -1,0 +1,6 @@
+interface:
+  display_name: "Orthogonal MCP"
+  short_description: "Configure and troubleshoot the hosted MCP server"
+  default_prompt: "Use $orthogonal-mcp to configure or diagnose my Orthogonal MCP connection."
+policy:
+  allow_implicit_invocation: true

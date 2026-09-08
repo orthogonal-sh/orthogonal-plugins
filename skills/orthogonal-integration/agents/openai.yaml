@@ -1,0 +1,13 @@
+interface:
+  display_name: "Orthogonal Integration"
+  short_description: "Build SDK, REST, CLI, or MCP integrations"
+  default_prompt: "Use $orthogonal-integration to add a current Orthogonal API workflow to this project."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "orthogonal"
+      description: "Orthogonal endpoint discovery and integration snippets"
+      transport: "streamable_http"
+      url: "https://mcp.orthogonal.com"
+policy:
+  allow_implicit_invocation: true

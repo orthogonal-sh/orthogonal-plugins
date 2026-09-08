@@ -1,0 +1,13 @@
+interface:
+  display_name: "Orthogonal"
+  short_description: "Discover and run verified tools and data APIs"
+  default_prompt: "Use $orthogonal to find a suitable API, compare its price, and run the best fit."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "orthogonal"
+      description: "Orthogonal hosted tools and data gateway"
+      transport: "streamable_http"
+      url: "https://mcp.orthogonal.com"
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,40 @@
+{
+  "name": "orthogonal",
+  "version": "0.1.0",
+  "description": "Connect agents to 800+ tool and data endpoints from 50+ verified providers through Orthogonal's hosted MCP server.",
+  "author": {
+    "name": "ChristianPickettCode",
+    "url": "https://github.com/ChristianPickettCode"
+  },
+  "homepage": "https://www.orthogonal.com",
+  "repository": "https://github.com/orthogonal-sh/orthogonal-plugins",
+  "license": "MIT",
+  "keywords": [
+    "api",
+    "data",
+    "mcp",
+    "orthogonal",
+    "tools"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Orthogonal",
+    "shortDescription": "Tools and fresh data for AI agents",
+    "longDescription": "Give your coding agent one connection for discovering, pricing, and calling tools and fresh data from verified API providers without managing separate provider accounts or keys.",
+    "developerName": "Orthogonal",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://www.orthogonal.com",
+    "defaultPrompt": [
+      "Search Orthogonal for APIs that can enrich a lead by email, compare their prices, and run the best fit.",
+      "Find a verified provider for live web search and show me the exact price before calling it.",
+      "Generate an integration snippet for an Orthogonal endpoint in this project."
+    ],
+    "composerIcon": "./assets/logo.jpg",
+    "logo": "./assets/logo.jpg"
+  }
+}

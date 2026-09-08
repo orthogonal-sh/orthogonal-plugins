@@ -1,0 +1,15 @@
+{
+  "name": "orthogonal",
+  "owner": {
+    "name": "ChristianPickettCode"
+  },
+  "description": "Official Orthogonal plugin marketplace for agent access to tools and data.",
+  "plugins": [
+    {
+      "name": "orthogonal",
+      "source": "./",
+      "description": "Discover, price, and call tools and data APIs from verified providers through one hosted MCP server.",
+      "category": "development"
+    }
+  ]
+}

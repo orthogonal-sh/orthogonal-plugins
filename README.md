@@ -126,7 +126,6 @@ Validation performs no paid API calls and does not modify live resources.
 - [Python SDK](https://github.com/orthogonal-sh/python)
 - [Orthogonal CLI](https://github.com/orthogonal-sh/cli)
 - [Cursor plugin template](https://github.com/cursor/plugin-template)
-- [AgentMail cross-client plugin reference](https://github.com/agentmail-to/agentmail-plugins)
 
 ## License
 

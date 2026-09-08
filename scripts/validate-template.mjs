@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
-import { access, readFile, stat } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = process.cwd();
 const errors = [];
-const namePattern = /^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/;
 
 async function readJson(relativePath) {
   try {
@@ -25,68 +24,51 @@ async function exists(relativePath) {
   }
 }
 
-const marketplace = await readJson(".cursor-plugin/marketplace.json");
+if (await exists(".cursor-plugin/marketplace.json")) {
+  errors.push("Single-plugin repositories must not include marketplace.json.");
+}
 
-if (marketplace) {
-  if (!namePattern.test(marketplace.name ?? "")) {
-    errors.push("Marketplace name must be lowercase kebab-case.");
+const manifest = await readJson(".cursor-plugin/plugin.json");
+
+if (manifest) {
+  if (!/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/.test(manifest.name ?? "")) {
+    errors.push("Plugin name must be lowercase and use alphanumerics, hyphens, or periods.");
+  }
+  if (manifest.name !== "orthogonal") errors.push("Plugin name must be orthogonal.");
+  if (manifest.author?.name !== "ChristianPickettCode") {
+    errors.push("Plugin author must be ChristianPickettCode.");
   }
 
-  if (!marketplace.owner?.name) {
-    errors.push("Marketplace owner.name is required.");
+  for (const field of ["version", "description", "homepage", "repository", "license", "logo", "mcpServers"]) {
+    if (!manifest[field]) errors.push(`Plugin manifest field is required: ${field}.`);
   }
 
-  if (!Array.isArray(marketplace.plugins) || marketplace.plugins.length === 0) {
-    errors.push("Marketplace plugins must be a non-empty array.");
-  } else {
-    for (const entry of marketplace.plugins) {
-      if (!namePattern.test(entry.name ?? "")) {
-        errors.push(`Invalid plugin name: ${entry.name}`);
-        continue;
-      }
+  if (manifest.homepage !== "https://www.orthogonal.com") {
+    errors.push("Plugin homepage is incorrect.");
+  }
+  if (manifest.repository !== "https://github.com/orthogonal-sh/orthogonal-plugins") {
+    errors.push("Plugin repository URL is incorrect.");
+  }
 
-      const source = String(entry.source ?? "").replace(/^\.\//, "");
-      if (!source || source.includes("..") || path.isAbsolute(source)) {
-        errors.push(`${entry.name}: source must be a safe relative path.`);
-        continue;
-      }
-
-      try {
-        const sourceStat = await stat(path.join(root, source));
-        if (!sourceStat.isDirectory()) {
-          errors.push(`${entry.name}: source is not a directory.`);
-          continue;
-        }
-      } catch {
-        errors.push(`${entry.name}: source directory is missing.`);
-        continue;
-      }
-
-      const manifestPath = path.join(source, ".cursor-plugin/plugin.json");
-      const manifest = await readJson(manifestPath);
-      if (!manifest) continue;
-
-      if (manifest.name !== entry.name) {
-        errors.push(`${entry.name}: marketplace and plugin manifest names differ.`);
-      }
-
-      for (const field of ["version", "description", "author", "license"]) {
-        if (!manifest[field]) errors.push(`${entry.name}: ${field} is required.`);
-      }
-
-      for (const relativeAsset of [manifest.logo, manifest.mcpServers]) {
-        if (!relativeAsset || !(await exists(path.join(source, relativeAsset)))) {
-          errors.push(`${entry.name}: referenced file is missing: ${relativeAsset}`);
-        }
-      }
-
-      const mcp = await readJson(path.join(source, manifest.mcpServers ?? "mcp.json"));
-      const server = mcp?.mcpServers?.orthogonal;
-      if (server?.url !== "https://mcp.orthogonal.com") {
-        errors.push(`${entry.name}: Orthogonal MCP URL is missing or incorrect.`);
-      }
+  for (const referencedFile of [manifest.logo, manifest.mcpServers]) {
+    if (!referencedFile || !(await exists(referencedFile))) {
+      errors.push(`Referenced file is missing: ${referencedFile}.`);
     }
   }
+}
+
+const mcp = await readJson(manifest?.mcpServers ?? "mcp.json");
+const servers = mcp?.mcpServers;
+
+if (!servers || Object.keys(servers).length !== 1) {
+  errors.push("mcp.json must define exactly one MCP server.");
+}
+if (servers?.orthogonal?.url !== "https://mcp.orthogonal.com") {
+  errors.push("Orthogonal MCP URL is missing or incorrect.");
+}
+
+for (const requiredFile of ["README.md", "LICENSE"]) {
+  if (!(await exists(requiredFile))) errors.push(`Required file is missing: ${requiredFile}.`);
 }
 
 if (errors.length) {

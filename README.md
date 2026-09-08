@@ -1,74 +1,34 @@
-# Orthogonal plugin for Cursor and Grok Bot
+# Cursor plugin template
 
-This repository contains the official Orthogonal plugin for Cursor and Grok Bot. It connects both products to Orthogonal's hosted MCP server so agents can search and call APIs from the Orthogonal marketplace.
+Build and publish Cursor Marketplace plugins from a single repo.
 
-## Install
+Two starter plugins are included:
 
-After the plugin is published to the Cursor Marketplace:
+- **starter-simple**: rules and skills only
+- **starter-advanced**: rules, skills, agents, commands, hooks, MCP, and scripts
 
-### Cursor
+## Getting started
 
-1. Open **Customize** in Cursor.
-2. Search for **Orthogonal**.
-3. Select **Install** and choose a scope.
-4. Select **Authenticate**, then sign in to Orthogonal in your browser.
+[Use this template](https://github.com/cursor/plugin-template/generate) to create a new repository, then customize:
 
-### Grok Bot
+1. `.cursor-plugin/marketplace.json`: set marketplace `name`, `owner`, and `metadata`.
+2. `plugins/*/.cursor-plugin/plugin.json`: set `name` (lowercase kebab-case), `displayName`, `author`, `description`, `keywords`, `license`, and `version`.
+3. Replace placeholder rules, skills, agents, commands, hooks, scripts, and logos.
 
-1. Open **Plugins** in Grok Bot.
-2. Search for **Orthogonal** and add it.
-3. Select **Authenticate**, then sign in to Orthogonal in your browser.
-4. Confirm Orthogonal appears under **Installed**.
+To add more plugins, see `docs/add-a-plugin.md`.
 
-## Test locally in Cursor
+## Single plugin vs multi-plugin
 
-Clone the repository, then link the plugin directory into Cursor's local plugin directory:
+This template defaults to **multi-plugin** (multiple plugins in one repo).
 
-```sh
-mkdir -p ~/.cursor/plugins/local
-ln -s "$(pwd)/plugins/orthogonal" ~/.cursor/plugins/local/orthogonal
-```
+For a **single plugin**, move your plugin folder contents to the repository root, keep one `.cursor-plugin/plugin.json`, and remove `.cursor-plugin/marketplace.json`.
 
-Restart Cursor or run **Developer: Reload Window**. Open **Customize** and confirm that Orthogonal appears under installed plugins.
+## Submission checklist
 
-To test the MCP endpoint without the plugin, add this server to your Cursor MCP configuration:
-
-```json
-{
-  "mcpServers": {
-    "orthogonal": {
-      "url": "https://mcp.orthogonal.com"
-    }
-  }
-}
-```
-
-## Validate
-
-Run:
-
-```sh
-node scripts/validate-template.mjs
-```
-
-## Repository structure
-
-```text
-.
-├── .cursor-plugin/
-│   └── marketplace.json
-├── plugins/
-│   └── orthogonal/
-│       ├── .cursor-plugin/plugin.json
-│       ├── assets/logo.svg
-│       ├── mcp.json
-│       └── README.md
-└── scripts/
-    └── validate-template.mjs
-```
-
-Built from Cursor's [plugin template](https://github.com/cursor/plugin-template).
-
-## License
-
-MIT
+- Each plugin has a valid `.cursor-plugin/plugin.json`.
+- Plugin names are unique, lowercase, and kebab-case.
+- `.cursor-plugin/marketplace.json` entries map to real plugin folders.
+- All frontmatter metadata is present in rule, skill, agent, and command files.
+- Logos are committed and referenced with relative paths.
+- `node scripts/validate-template.mjs` passes.
+- Repository link is ready for submission to the Cursor team (Slack or `kniparko@anysphere.com`).

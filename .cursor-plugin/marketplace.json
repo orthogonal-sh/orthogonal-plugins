@@ -1,17 +1,23 @@
 {
-  "name": "orthogonal-plugins",
+  "name": "cursor-plugin-starters",
   "owner": {
-    "name": "Orthogonal"
+    "name": "Your Org",
+    "email": "plugins@example.com"
   },
   "metadata": {
-    "description": "Official Orthogonal plugins for AI agents",
+    "description": "Starter marketplace template for Cursor plugins",
     "version": "0.1.0"
   },
   "plugins": [
     {
-      "name": "orthogonal",
-      "source": "./plugins/orthogonal",
-      "description": "Connect Cursor and Grok Bot to the Orthogonal API marketplace through MCP."
+      "name": "starter-simple",
+      "source": "./plugins/starter-simple",
+      "description": "Minimal plugin with rules and skills only"
+    },
+    {
+      "name": "starter-advanced",
+      "source": "./plugins/starter-advanced",
+      "description": "Full-featured plugin with rules, skills, agents, commands, hooks, and MCP"
     }
   ]
 }

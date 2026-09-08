@@ -1,7 +1,6 @@
 {
   "mcpServers": {
     "orthogonal": {
-      "type": "http",
       "url": "https://mcp.orthogonal.com"
     }
   }

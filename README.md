@@ -2,7 +2,7 @@
 
 Official Orthogonal plugin for Codex, Claude Code, Cursor, Grok Bot, and other compatible agent surfaces. It gives agents one connection for discovering, pricing, and calling 800+ tool and data endpoints from 50+ verified providers.
 
-The repository keeps shared Agent Skills portable while using native manifests and OAuth-aware MCP configuration for each supported client. It also includes the vendor-neutral [Open Plugins](https://open-plugins.com) manifest.
+The repository keeps shared Agent Skills portable while using native manifests and OAuth-aware MCP configuration for each supported client. It also conforms to the vendor-neutral [Agent Plugins](https://agent-plugins.org/) 1.0 package format.
 
 ## Included skills
 
@@ -41,7 +41,7 @@ Once Orthogonal is listed in the Cursor Marketplace, run this in Agent chat:
 /add-plugin orthogonal
 ```
 
-You can also open Cursor Settings, find **Orthogonal** under Plugins, and select **Install**. Complete the Orthogonal browser sign-in when the MCP server first connects.
+You can also open **Customize** in the Cursor sidebar, find **Orthogonal**, select **Install**, and choose a project or user scope. Complete the Orthogonal browser sign-in when the MCP server first connects.
 
 To test this repository directly, clone it and link it into Cursor's local plugin directory:
 
@@ -65,7 +65,6 @@ Point any Streamable HTTP MCP client at the hosted server:
 {
   "mcpServers": {
     "orthogonal": {
-      "type": "http",
       "url": "https://mcp.orthogonal.com"
     }
   }
@@ -121,11 +120,16 @@ Validation performs no paid API calls and does not modify live resources.
 - [Orthogonal](https://www.orthogonal.com/)
 - [Orthogonal documentation](https://docs.orthogonal.com/)
 - [Hosted MCP setup and tool reference](https://docs.orthogonal.com/mcp/setup)
+- [Authentication](https://docs.orthogonal.com/authentication)
 - [Pricing](https://docs.orthogonal.com/concepts/pricing)
 - [TypeScript SDK](https://github.com/orthogonal-sh/typescript)
 - [Python SDK](https://github.com/orthogonal-sh/python)
 - [Orthogonal CLI](https://github.com/orthogonal-sh/cli)
-- [Cursor plugin template](https://github.com/cursor/plugin-template)
+- [Agent Plugins specification](https://agent-plugins.org/specification)
+- [Codex plugins](https://developers.openai.com/plugins/build/plugins)
+- [Claude Code plugin marketplaces](https://code.claude.com/docs/en/plugin-marketplaces)
+- [Cursor plugins](https://cursor.com/docs/plugins)
+- [Grok Bot plugin setup](https://cursor.com/help/grok-bot/connect-plugins)
 
 ## License
 

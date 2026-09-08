@@ -10,6 +10,8 @@ const expectedAuthor = "ChristianPickettCode";
 const expectedHomepage = "https://www.orthogonal.com";
 const expectedRepository = "https://github.com/orthogonal-sh/orthogonal-plugins";
 const expectedMcpUrl = "https://mcp.orthogonal.com";
+const expectedAgentPluginSchema = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json";
+const expectedAgentMcpSchema = "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json";
 const expectedLogoSha256 = "97f96e9e4f78a3d6e92a07f7e5f630e8af6845d6f8f6b1ad85c87daad70137f2";
 
 async function exists(relativePath) {
@@ -50,7 +52,7 @@ const manifestPaths = {
   claude: ".claude-plugin/plugin.json",
   codex: ".codex-plugin/plugin.json",
   cursor: ".cursor-plugin/plugin.json",
-  open: ".plugin/plugin.json",
+  portable: "plugin.json",
 };
 
 const manifests = {};
@@ -90,10 +92,38 @@ for (const [surface, manifest] of Object.entries(manifests)) {
 const mcp = await readJson(".mcp.json");
 const servers = mcp.mcpServers ?? {};
 if (Object.keys(servers).length !== 1) errors.push(".mcp.json must define exactly one MCP server");
-if (JSON.stringify(servers.orthogonal) !== JSON.stringify({ type: "http", url: expectedMcpUrl })) {
-  errors.push(".mcp.json must contain the hosted OAuth-compatible Orthogonal server");
+if (JSON.stringify(servers.orthogonal) !== JSON.stringify({ url: expectedMcpUrl })) {
+  errors.push(".mcp.json must contain the Claude and Cursor hosted Orthogonal server");
 }
-if (await exists("mcp.json")) errors.push("use the shared .mcp.json; stale mcp.json must not exist");
+
+const codexMcp = await readJson(".codex-mcp.json");
+if (JSON.stringify(codexMcp) !== JSON.stringify({ orthogonal: { url: expectedMcpUrl } })) {
+  errors.push(".codex-mcp.json must contain Codex's direct hosted Orthogonal server map");
+}
+if (manifests.codex.mcpServers !== "./.codex-mcp.json") {
+  errors.push("Codex manifest must reference its direct MCP server map");
+}
+if (manifests.cursor.mcpServers !== "./.mcp.json") {
+  errors.push("Cursor manifest must reference the shared native MCP configuration");
+}
+
+const portableManifest = manifests.portable;
+if (portableManifest.$schema !== expectedAgentPluginSchema) {
+  errors.push("plugin.json must target the Agent Plugins 1.0 manifest schema");
+}
+for (const unsupportedField of ["skills", "mcpServers", "logo", "interface"]) {
+  if (unsupportedField in portableManifest) errors.push(`plugin.json contains unsupported field: ${unsupportedField}`);
+}
+
+const portableMcp = await readJson("mcp.json");
+if (portableMcp.$schema !== expectedAgentMcpSchema) {
+  errors.push("mcp.json must target the Agent Plugins 1.0 MCP schema");
+}
+if (JSON.stringify(portableMcp.mcpServers?.orthogonal) !== JSON.stringify({ type: "streamable-http", url: expectedMcpUrl })) {
+  errors.push("mcp.json must contain the portable Streamable HTTP Orthogonal server");
+}
+if (Object.keys(portableMcp.mcpServers ?? {}).length !== 1) errors.push("mcp.json must define exactly one MCP server");
+if (await exists(".plugin/plugin.json")) errors.push("legacy .plugin/plugin.json must not exist");
 
 const agentsMarketplace = await readJson(".agents/plugins/marketplace.json");
 if (agentsMarketplace.name !== "orthogonal") errors.push(".agents marketplace name must be orthogonal");
@@ -114,7 +144,6 @@ if (!readme.includes("\n## Installations\n")) errors.push('README.md must contai
 for (const client of ["Codex", "Claude Code", "Cursor", "Grok Bot"]) {
   if (!readme.includes(`### ${client}`)) errors.push(`README.md is missing the ${client} installation section`);
 }
-
 const skillRoot = path.join(root, "skills");
 const skillDirectories = (await readdir(skillRoot, { withFileTypes: true }))
   .filter((entry) => entry.isDirectory())

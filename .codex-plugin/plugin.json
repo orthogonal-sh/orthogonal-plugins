@@ -1,6 +1,6 @@
 {
   "name": "orthogonal",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Connect agents to 800+ tool and data endpoints from 50+ verified providers through Orthogonal's hosted MCP server.",
   "author": {
     "name": "ChristianPickettCode",
@@ -17,7 +17,7 @@
     "tools"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
+  "mcpServers": "./.codex-mcp.json",
   "interface": {
     "displayName": "Orthogonal",
     "shortDescription": "Tools and fresh data for AI agents",

@@ -1,0 +1,21 @@
+{
+  "name": "orthogonal",
+  "displayName": "Orthogonal",
+  "version": "0.1.0",
+  "description": "Search and call APIs from Cursor and Grok Bot through Orthogonal's MCP server.",
+  "author": {
+    "name": "Orthogonal"
+  },
+  "homepage": "https://www.orthogonal.com",
+  "repository": "https://github.com/orthogonal-sh/orthogonal-cursor-plugin",
+  "license": "MIT",
+  "keywords": [
+    "api",
+    "cursor",
+    "grok-bot",
+    "mcp",
+    "orthogonal"
+  ],
+  "logo": "assets/logo.svg",
+  "mcpServers": "mcp.json"
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Orthogonal</title>
+  <desc id="desc">A geometric black O on a warm white background.</desc>
+  <rect width="512" height="512" rx="112" fill="#eceae5"/>
+  <circle cx="256" cy="256" r="148" fill="none" stroke="#161616" stroke-width="64"/>
+  <path d="M109 256h294M256 109v294" fill="none" stroke="#161616" stroke-width="32" stroke-linecap="round"/>
+  <circle cx="256" cy="256" r="38" fill="#eceae5" stroke="#161616" stroke-width="24"/>
+</svg>

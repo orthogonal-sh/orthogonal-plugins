@@ -1,0 +1,17 @@
+{
+  "name": "orthogonal-plugins",
+  "owner": {
+    "name": "Orthogonal"
+  },
+  "metadata": {
+    "description": "Official Orthogonal plugins for AI agents",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "orthogonal",
+      "source": "./plugins/orthogonal",
+      "description": "Connect Cursor and Grok Bot to the Orthogonal API marketplace through MCP."
+    }
+  ]
+}

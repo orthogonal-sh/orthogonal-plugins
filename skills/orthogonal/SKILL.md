@@ -1,6 +1,6 @@
 ---
 name: orthogonal
-description: Discover, compare, price, and run third-party tools or data APIs through the connected Orthogonal MCP server. Use when a user needs fresh web, company, contact, financial, enrichment, scraping, or other external data; asks to find a suitable API; or wants an API call executed. Do not use for MCP installation or troubleshooting (orthogonal-mcp) or for writing an Orthogonal integration (orthogonal-integration).
+description: Discover, compare, price, and run third-party tools or data APIs through the connected Orthogonal MCP server. Use when a user needs fresh web, company, contact, financial, enrichment, scraping, or other external data; asks to find a suitable API; or wants an API call executed. Do not use for MCP installation (orthogonal-mcp), SDK implementation (orthogonal-sdk), or CLI workflows (orthogonal-cli).
 ---
 
 # Orthogonal

@@ -61,6 +61,12 @@ for (const [surface, relativePath] of Object.entries(manifestPaths)) {
 const versions = new Set(Object.values(manifests).map((manifest) => manifest.version));
 if (versions.size !== 1 || versions.has(undefined)) {
   errors.push(`plugin manifest versions are not synchronized: ${JSON.stringify(Object.fromEntries(Object.entries(manifests).map(([name, manifest]) => [name, manifest.version])))}`);
+} else {
+  const [version] = versions;
+  const changelog = await readFile(path.join(root, "CHANGELOG.md"), "utf8");
+  if (!changelog.includes(`## ${version} -`)) {
+    errors.push(`CHANGELOG.md has no entry for ${version}`);
+  }
 }
 
 for (const [surface, manifest] of Object.entries(manifests)) {
@@ -144,12 +150,14 @@ for (const skillName of skillDirectories) {
 
   const openai = await readFile(path.join(root, openaiPath), "utf8");
   if (!openai.includes(`$${skillName}`)) errors.push(`${skillName}: default_prompt must mention $${skillName}`);
-  if (skillName !== "orthogonal-mcp" && !openai.includes(expectedMcpUrl)) {
+  if (skillName === "orthogonal" && !openai.includes(expectedMcpUrl)) {
     errors.push(`${skillName}: missing hosted MCP dependency`);
+  } else if (skillName !== "orthogonal" && openai.includes("dependencies:")) {
+    errors.push(`${skillName}: declares an unnecessary MCP dependency`);
   }
 }
 
-if (skillDirectories.join(",") !== "orthogonal,orthogonal-integration,orthogonal-mcp") {
+if (skillDirectories.join(",") !== "orthogonal,orthogonal-cli,orthogonal-mcp,orthogonal-sdk") {
   errors.push(`unexpected skill set: ${skillDirectories.join(", ")}`);
 }
 

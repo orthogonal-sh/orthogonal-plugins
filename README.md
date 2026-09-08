@@ -7,7 +7,8 @@ The repository keeps shared Agent Skills portable while using native manifests a
 ## Included skills
 
 - `orthogonal` — discover, compare, price, and run tools through the hosted MCP server
-- `orthogonal-integration` — build with the Orthogonal SDK, REST API, CLI, or generated integration snippets
+- `orthogonal-sdk` — build with the official TypeScript or Python SDK
+- `orthogonal-cli` — discover and call APIs, manage usage, and work with agent skills from the terminal
 - `orthogonal-mcp` — configure authentication, verify the connection, and troubleshoot MCP clients
 
 The skills use the MCP server's live tool schemas and catalog results as the source of truth, so provider parameters and prices do not become stale copies in this repository.
@@ -21,7 +22,7 @@ codex plugin marketplace add orthogonal-sh/orthogonal-plugins
 codex plugin add orthogonal@orthogonal
 ```
 
-Start a new Codex session after installation. Complete the Orthogonal OAuth flow when prompted and use `/mcp` to inspect the connection. Skills can be invoked explicitly with names such as `$orthogonal` or `$orthogonal-integration`.
+Start a new Codex session after installation. Complete the Orthogonal OAuth flow when prompted and use `/mcp` to inspect the connection. Skills can be invoked explicitly with names such as `$orthogonal`, `$orthogonal-sdk`, or `$orthogonal-cli`.
 
 ### Claude Code
 
@@ -121,6 +122,9 @@ Validation performs no paid API calls and does not modify live resources.
 - [Orthogonal documentation](https://docs.orthogonal.com/)
 - [Hosted MCP setup and tool reference](https://docs.orthogonal.com/mcp/setup)
 - [Pricing](https://docs.orthogonal.com/concepts/pricing)
+- [TypeScript SDK](https://github.com/orthogonal-sh/typescript)
+- [Python SDK](https://github.com/orthogonal-sh/python)
+- [Orthogonal CLI](https://github.com/orthogonal-sh/cli)
 - [Cursor plugin template](https://github.com/cursor/plugin-template)
 - [AgentMail cross-client plugin reference](https://github.com/agentmail-to/agentmail-plugins)
 

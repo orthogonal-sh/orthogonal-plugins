@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.0 - 2026-09-08
+
+- Add dedicated skills for the Orthogonal CLI and the official TypeScript and Python SDKs.
+- Narrow skill routing so MCP calls, SDK development, CLI workflows, and MCP setup do not overlap.
+
 ## 0.1.0 - 2026-09-08
 
 - Add native manifests for Codex, Claude Code, Cursor, and Open Plugins.

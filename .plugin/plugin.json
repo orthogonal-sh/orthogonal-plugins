@@ -1,6 +1,6 @@
 {
   "name": "orthogonal",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Connect agents to 800+ tool and data endpoints from 50+ verified providers through Orthogonal's hosted MCP server.",
   "author": {
     "name": "ChristianPickettCode",

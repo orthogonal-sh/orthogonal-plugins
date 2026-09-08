@@ -1,0 +1,6 @@
+interface:
+  display_name: "Orthogonal SDK"
+  short_description: "Build with the TypeScript or Python SDK"
+  default_prompt: "Use $orthogonal-sdk to implement an Orthogonal API call in this project."
+policy:
+  allow_implicit_invocation: true

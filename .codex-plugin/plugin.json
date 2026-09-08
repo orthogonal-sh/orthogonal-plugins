@@ -1,6 +1,6 @@
 {
   "name": "orthogonal",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Connect agents to 800+ tool and data endpoints from 50+ verified providers through Orthogonal's hosted MCP server.",
   "author": {
     "name": "ChristianPickettCode",
@@ -32,7 +32,7 @@
     "defaultPrompt": [
       "Search Orthogonal for APIs that can enrich a lead by email, compare their prices, and run the best fit.",
       "Find a verified provider for live web search and show me the exact price before calling it.",
-      "Generate an integration snippet for an Orthogonal endpoint in this project."
+      "Add an Orthogonal SDK call for a verified endpoint to this project."
     ],
     "composerIcon": "./assets/logo.jpg",
     "logo": "./assets/logo.jpg"

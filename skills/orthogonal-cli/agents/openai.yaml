@@ -1,0 +1,6 @@
+interface:
+  display_name: "Orthogonal CLI"
+  short_description: "Use Orthogonal APIs and skills from the terminal"
+  default_prompt: "Use $orthogonal-cli to find and run an API from the terminal."
+policy:
+  allow_implicit_invocation: true

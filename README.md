@@ -1,6 +1,6 @@
 # Orthogonal Plugin
 
-Official Orthogonal plugin for Codex, Claude Code, Cursor, Grok Bot, and other compatible agent surfaces. It gives agents one connection for discovering, pricing, and calling 800+ tool and data endpoints from 50+ verified providers.
+Official Orthogonal plugin for Codex, Claude Code, Cursor, Grok Bot, and other compatible agent surfaces. It gives agents one connection for discovering, pricing, and calling paid APIs and live data from verified providers.
 
 The repository keeps shared Agent Skills portable while using native manifests and OAuth-aware MCP configuration for each supported client. It also conforms to the vendor-neutral [Agent Plugins](https://agent-plugins.org/) 1.0 package format.
 
@@ -84,7 +84,7 @@ Orthogonal uses per-call pricing with no subscription or minimum. Search results
 
 ## MCP workflow
 
-The hosted server exposes seven tools:
+The hosted server exposes seven catalog tools:
 
 - `search` finds APIs from a natural-language request.
 - `get_details` returns the current parameters for one endpoint.
@@ -93,6 +93,8 @@ The hosted server exposes seven tools:
 - `integrate` generates ready-to-use code snippets.
 - `batch_get_details` inspects up to 20 endpoints in parallel.
 - `batch_use` runs up to 20 independent calls in parallel.
+
+After OAuth sign-in it also exposes `account` (balance and who pays), `usage` (recent paid calls), and `onboarding_tools`, `onboarding` and `payouts` for teams that list their own APIs.
 
 A typical workflow is `search` → `get_details` → `quote` when needed → `use`.
 

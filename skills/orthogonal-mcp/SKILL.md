@@ -30,7 +30,7 @@ This repository's `.mcp.json` provides the same server to Codex, Claude Code, Cu
 
 ## Available tools
 
-The hosted server exposes seven tools: `search`, `get_details`, `quote`, `use`, `integrate`, `batch_use`, and `batch_get_details`. Load their schemas from the connected server; do not rely on a copied parameter contract.
+The hosted server exposes seven catalog tools: `search`, `get_details`, `quote`, `use`, `integrate`, `batch_use`, and `batch_get_details`. After OAuth sign-in it adds `account`, `usage`, `onboarding_tools`, `onboarding`, and `payouts`. Load their schemas from the connected server; do not rely on a copied parameter contract.
 
 ## Verify
 

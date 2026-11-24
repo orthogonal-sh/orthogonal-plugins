@@ -1,7 +1,7 @@
 {
   "name": "orthogonal",
   "owner": {
-    "name": "ChristianPickettCode"
+    "name": "Orthogonal"
   },
   "description": "Official Orthogonal plugin marketplace for agent access to tools and data.",
   "plugins": [

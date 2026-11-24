@@ -6,7 +6,7 @@ import path from "node:path";
 
 const root = process.cwd();
 const errors = [];
-const expectedAuthor = "ChristianPickettCode";
+const expectedAuthor = "Orthogonal";
 const expectedHomepage = "https://www.orthogonal.com";
 const expectedRepository = "https://github.com/orthogonal-sh/orthogonal-plugins";
 const expectedMcpUrl = "https://mcp.orthogonal.com";
@@ -111,18 +111,54 @@ const portableManifest = manifests.portable;
 if (portableManifest.$schema !== expectedAgentPluginSchema) {
   errors.push("plugin.json must target the Agent Plugins 1.0 manifest schema");
 }
-for (const unsupportedField of ["skills", "mcpServers", "logo", "interface"]) {
-  if (unsupportedField in portableManifest) errors.push(`plugin.json contains unsupported field: ${unsupportedField}`);
+const portableFields = ["$schema", "name", "version", "description", "author", "homepage", "repository", "license", "keywords", "extensions"];
+for (const field of Object.keys(portableManifest)) {
+  if (!portableFields.includes(field)) errors.push(`plugin.json contains unsupported field: ${field}`);
+}
+
+// OpenAI plugin directory (ChatGPT and Codex): developers.openai.com/plugins/deploy/submission
+const openai = portableManifest.extensions?.["com.openai"] ?? {};
+const listing = openai.interface ?? {};
+for (const field of ["displayName", "shortDescription", "longDescription", "developerName", "category", "capabilities", "websiteURL", "supportURL", "privacyPolicyURL", "termsOfServiceURL", "logo", "composerIcon"]) {
+  if (!(field in listing)) errors.push(`plugin.json extensions.com.openai.interface.${field} is required`);
+}
+for (const [field, limit] of [["displayName", 30], ["shortDescription", 30], ["longDescription", 4000], ["developerName", 80]]) {
+  if (typeof listing[field] === "string" && listing[field].length > limit) errors.push(`openai interface.${field} exceeds ${limit} characters`);
+}
+for (const field of ["websiteURL", "supportURL", "privacyPolicyURL", "termsOfServiceURL"]) {
+  if (typeof listing[field] === "string" && !listing[field].startsWith("https://")) errors.push(`openai interface.${field} must be HTTPS`);
+}
+if ((listing.defaultPrompt ?? []).length > 3 || (listing.defaultPrompt ?? []).some((prompt) => prompt.length > 128)) {
+  errors.push("openai interface.defaultPrompt allows at most 3 prompts of 128 characters");
+}
+for (const field of ["composerIcon", "composerIconDark", "logo", "logoDark"]) {
+  if (field in listing) await checkRelativePath(`plugin.json openai interface.${field}`, listing[field]);
+}
+const testCases = openai.review?.test_cases ?? {};
+if ((testCases.positive ?? []).length < 5) errors.push("openai review needs 5 positive test cases");
+if ((testCases.negative ?? []).length < 3) errors.push("openai review needs 3 negative test cases");
+for (const testCase of testCases.positive ?? []) {
+  for (const field of ["description", "prompt", "tools_triggered", "expected_behavior"]) {
+    if (!testCase[field]) errors.push(`openai positive test case is missing ${field}`);
+  }
+}
+if (openai.review?.commerce !== false) errors.push("openai review.commerce must be false");
+for (const forbidden of ["apps", "hooks"]) {
+  if (forbidden in openai) errors.push(`openai extension must not declare ${forbidden}: the directory rejects them`);
 }
 
 const portableMcp = await readJson("mcp.json");
 if (portableMcp.$schema !== expectedAgentMcpSchema) {
   errors.push("mcp.json must target the Agent Plugins 1.0 MCP schema");
 }
-if (JSON.stringify(portableMcp.mcpServers?.orthogonal) !== JSON.stringify({ type: "streamable-http", url: expectedMcpUrl })) {
+const portableServer = portableMcp.mcpServers?.orthogonal ?? {};
+if (portableServer.type !== "streamable-http" || portableServer.url !== expectedMcpUrl) {
   errors.push("mcp.json must contain the portable Streamable HTTP Orthogonal server");
 }
 if (Object.keys(portableMcp.mcpServers ?? {}).length !== 1) errors.push("mcp.json must define exactly one MCP server");
+if (JSON.stringify(portableServer.extensions?.["com.openai"]?.auth) !== JSON.stringify({ type: "oauth", client: { mode: "dcr" } })) {
+  errors.push("mcp.json must declare OpenAI OAuth with dynamic client registration and no client secret");
+}
 if (await exists(".plugin/plugin.json")) errors.push("legacy .plugin/plugin.json must not exist");
 
 const agentsMarketplace = await readJson(".agents/plugins/marketplace.json");

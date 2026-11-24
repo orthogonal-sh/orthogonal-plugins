@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.2 - 2026-11-24
+
+- OpenAI OAuth asks for `profile email` only and turns OIDC off: Orthogonal's authorization server does not grant `openid` to dynamically registered clients.
+
 ## 0.3.1 - 2026-11-24
 
 - Drop pricing and credit wording from the OpenAI listing description, per the plugin dashboard's metadata check.

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.4 - 2026-11-24
+
+- Add `claude/`, the Claude plugin directory submission: only the Claude manifest, `.mcp.json`, icon, README and the `orthogonal` and `orthogonal-mcp` skills. The directory refuses scripts and other clients' files in the submitted folder, and the SDK skill reads `ORTHOGONAL_API_KEY`. `scripts/validate-template.mjs` keeps the copies equal to the originals.
+- The `orthogonal` marketplace now installs `claude/`, so Claude Code gets the same plugin as the directory.
+
 ## 0.3.3 - 2026-11-24
 
 - Claude Code: give the hosted MCP server `"type": "http"` in `.mcp.json`. Without it Claude Code dropped the server at load, so installs got the skills but no MCP server.

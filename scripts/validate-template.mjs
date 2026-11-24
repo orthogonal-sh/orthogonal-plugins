@@ -96,6 +96,16 @@ if (JSON.stringify(servers.orthogonal) !== JSON.stringify({ type: "http", url: e
   errors.push(".mcp.json must contain the Claude hosted Orthogonal server with type http");
 }
 
+// claude/ is the Claude plugin directory submission: Claude-only files, copies of the MCP skills.
+const directoryManifest = await readJson("claude/.claude-plugin/plugin.json");
+if (JSON.stringify(directoryManifest) !== JSON.stringify(manifests.claude)) errors.push("claude/.claude-plugin/plugin.json must equal .claude-plugin/plugin.json");
+const directoryMcp = await readJson("claude/.mcp.json");
+if (JSON.stringify(directoryMcp) !== JSON.stringify(mcp)) errors.push("claude/.mcp.json must equal .mcp.json");
+for (const file of ["skills/orthogonal/SKILL.md", "skills/orthogonal-mcp/SKILL.md", "LICENSE"]) {
+  const [a, b] = await Promise.all([readFile(path.join(root, file), "utf8"), readFile(path.join(root, "claude", file), "utf8")]);
+  if (a !== b) errors.push(`claude/${file} must equal ${file}`);
+}
+
 const cursorMcp = await readJson(".cursor-mcp.json");
 if (Object.keys(cursorMcp.mcpServers ?? {}).length !== 1 || JSON.stringify(cursorMcp.mcpServers?.orthogonal) !== JSON.stringify({ url: expectedMcpUrl })) {
   errors.push(".cursor-mcp.json must contain only the Cursor hosted Orthogonal server");
@@ -176,8 +186,8 @@ if (agentsEntry?.name !== "orthogonal" || agentsEntry?.source?.source !== "local
 const claudeMarketplace = await readJson(".claude-plugin/marketplace.json");
 if (claudeMarketplace.name !== "orthogonal") errors.push("Claude marketplace name must be orthogonal");
 if (claudeMarketplace.owner?.name !== expectedAuthor) errors.push(`Claude marketplace owner must be ${expectedAuthor}`);
-if (claudeMarketplace.plugins?.[0]?.name !== "orthogonal" || claudeMarketplace.plugins?.[0]?.source !== "./") {
-  errors.push("Claude marketplace must expose the root Orthogonal plugin");
+if (claudeMarketplace.plugins?.[0]?.name !== "orthogonal" || claudeMarketplace.plugins?.[0]?.source !== "./claude") {
+  errors.push("Claude marketplace must expose the claude/ Orthogonal plugin");
 }
 
 const readme = await readFile(path.join(root, "README.md"), "utf8");

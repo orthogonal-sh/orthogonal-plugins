@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "orthogonal",
-      "source": "./",
+      "source": "./claude",
       "description": "Discover, price, and call tools and data APIs from verified providers through one hosted MCP server.",
       "category": "development"
     }

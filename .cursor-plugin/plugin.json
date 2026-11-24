@@ -1,7 +1,7 @@
 {
   "name": "orthogonal",
   "displayName": "Orthogonal",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Connect agents to paid APIs and live data from verified providers through Orthogonal's hosted MCP server.",
   "author": {
     "name": "Orthogonal",

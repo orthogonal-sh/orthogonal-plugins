@@ -156,7 +156,7 @@ if (portableServer.type !== "streamable-http" || portableServer.url !== expected
   errors.push("mcp.json must contain the portable Streamable HTTP Orthogonal server");
 }
 if (Object.keys(portableMcp.mcpServers ?? {}).length !== 1) errors.push("mcp.json must define exactly one MCP server");
-if (JSON.stringify(portableServer.extensions?.["com.openai"]?.auth) !== JSON.stringify({ type: "oauth", client: { mode: "dcr" } })) {
+if (JSON.stringify(portableServer.extensions?.["com.openai"]?.auth) !== JSON.stringify({ type: "oauth", client: { mode: "dcr" }, defaultScopes: ["profile", "email"], oidcEnabled: false })) {
   errors.push("mcp.json must declare OpenAI OAuth with dynamic client registration and no client secret");
 }
 if (await exists(".plugin/plugin.json")) errors.push("legacy .plugin/plugin.json must not exist");

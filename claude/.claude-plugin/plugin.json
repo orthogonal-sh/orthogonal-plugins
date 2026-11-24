@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "orthogonal",
+  "displayName": "Orthogonal",
+  "version": "0.3.4",
+  "description": "Connect agents to paid APIs and live data from verified providers through Orthogonal's hosted MCP server.",
+  "author": {
+    "name": "Orthogonal",
+    "url": "https://www.orthogonal.com"
+  },
+  "homepage": "https://www.orthogonal.com",
+  "repository": "https://github.com/orthogonal-sh/orthogonal-plugins",
+  "license": "MIT",
+  "icon": "./assets/logo.png",
+  "documentationUrl": "https://docs.orthogonal.com",
+  "supportUrl": "https://www.orthogonal.com/support",
+  "privacyPolicyUrl": "https://www.orthogonal.com/privacy",
+  "termsOfServiceUrl": "https://www.orthogonal.com/terms",
+  "keywords": [
+    "api",
+    "data",
+    "mcp",
+    "orthogonal",
+    "tools"
+  ]
+}

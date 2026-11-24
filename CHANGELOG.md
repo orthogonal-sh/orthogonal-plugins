@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1 - 2026-11-24
+
+- Drop pricing and credit wording from the OpenAI listing description, per the plugin dashboard's metadata check.
+
 ## 0.3.0 - 2026-11-24
 
 - Add the OpenAI plugin directory metadata (ChatGPT and Codex) to the portable manifest: listing, review test cases and release notes.

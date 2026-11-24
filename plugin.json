@@ -1,11 +1,11 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "orthogonal",
-  "version": "0.2.1",
-  "description": "Connect agents to 800+ tool and data endpoints from 50+ verified providers through Orthogonal's hosted MCP server.",
+  "version": "0.3.0",
+  "description": "Connect agents to paid APIs and live data from verified providers through Orthogonal's hosted MCP server.",
   "author": {
-    "name": "ChristianPickettCode",
-    "url": "https://github.com/ChristianPickettCode"
+    "name": "Orthogonal",
+    "url": "https://www.orthogonal.com"
   },
   "homepage": "https://www.orthogonal.com",
   "repository": "https://github.com/orthogonal-sh/orthogonal-plugins",
@@ -16,5 +16,88 @@
     "mcp",
     "orthogonal",
     "tools"
-  ]
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Orthogonal",
+        "shortDescription": "Live data and APIs for agents",
+        "longDescription": "Orthogonal gives ChatGPT and Codex one connection to paid APIs and live data from verified providers: people and company enrichment, web search and scraping, and more, without separate provider accounts or keys. Describe a task and Orthogonal finds matching endpoints and shows each one's parameters and exact price before anything runs. Running an endpoint spends credits already in your Orthogonal account, and you approve each paid call. Your account's balance and usage history stay visible at any time. For developers, Orthogonal also returns code to call the same endpoint from your own app. Requires an Orthogonal account. Results come from third-party providers and can vary by provider.",
+        "developerName": "Orthogonal",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Read",
+          "Write"
+        ],
+        "websiteURL": "https://www.orthogonal.com",
+        "supportURL": "https://www.orthogonal.com/support",
+        "privacyPolicyURL": "https://www.orthogonal.com/privacy",
+        "termsOfServiceURL": "https://www.orthogonal.com/terms",
+        "defaultPrompt": [
+          "Find an API that gets a person's work email and show its price.",
+          "Scrape https://example.com with Orthogonal and summarize it.",
+          "What's my Orthogonal credit balance and recent usage?"
+        ],
+        "composerIcon": "./assets/icon.png",
+        "composerIconDark": "./assets/icon-dark.png",
+        "logo": "./assets/logo.png",
+        "logoDark": "./assets/logo-dark.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Find a paid API and its price without running it",
+              "prompt": "Find an API on Orthogonal that returns a person's work email from their name and company, and tell me what it costs.",
+              "tools_triggered": "search, get_details",
+              "expected_behavior": "Lists matching endpoints with their prices and parameters. Nothing runs and nothing is charged."
+            },
+            {
+              "description": "Price one exact request without running it",
+              "prompt": "How much would it cost to scrape https://example.com with Orthogonal?",
+              "tools_triggered": "search, quote",
+              "expected_behavior": "Returns the price in USD for that request. Nothing runs and nothing is charged."
+            },
+            {
+              "description": "Run one paid call after the user approves it",
+              "prompt": "Use Orthogonal to scrape https://example.com and summarize the page.",
+              "tools_triggered": "search, get_details, use",
+              "expected_behavior": "ChatGPT asks the user to approve the paid call, then summarizes the page. A few cents of credits are charged to the test account."
+            },
+            {
+              "description": "Read the signed-in account's balance and usage",
+              "prompt": "What's my Orthogonal credit balance and what did I spend recently?",
+              "tools_triggered": "account, usage",
+              "expected_behavior": "Shows the test account's credit balance and its recent calls with their cost. Nothing is charged."
+            },
+            {
+              "description": "Generate code to call an endpoint from the user's own app",
+              "prompt": "Give me TypeScript code to call an Orthogonal web search endpoint from my app.",
+              "tools_triggered": "search, integrate",
+              "expected_behavior": "Returns a TypeScript code sample for a web search endpoint. Nothing runs and nothing is charged."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Creative writing needs no API",
+              "prompt": "Write a haiku about autumn."
+            },
+            {
+              "description": "Moving money or crypto is out of scope",
+              "prompt": "Send 0.1 ETH from my wallet to this address: 0x0000000000000000000000000000000000000000"
+            },
+            {
+              "description": "Simple arithmetic needs no API",
+              "prompt": "What's 15% of 240?"
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "The plugin sells nothing in ChatGPT; paid calls spend credits the user already holds in their Orthogonal account."
+      },
+      "publication": {
+        "release_notes": "First release: search, price and run Orthogonal APIs from ChatGPT and Codex."
+      }
+    }
+  }
 }

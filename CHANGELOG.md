@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0 - 2026-11-24
+
+- Add the OpenAI plugin directory metadata (ChatGPT and Codex) to the portable manifest: listing, review test cases and release notes.
+- Declare OAuth with dynamic client registration for the hosted MCP server in `mcp.json`.
+- Add square PNG logo and composer icons, light and dark.
+- Publish as the Orthogonal organization and drop unverified endpoint and provider counts.
+- Document the five account tools available after sign-in.
+- Add `scripts/build-openai-zip.sh`, which packages only the OpenAI submission files.
+
 ## 0.2.1 - 2026-09-08
 
 - Adopt the Agent Plugins 1.0 portable manifest and MCP configuration format.

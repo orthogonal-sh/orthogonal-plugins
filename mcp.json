@@ -3,7 +3,17 @@
   "mcpServers": {
     "orthogonal": {
       "type": "streamable-http",
-      "url": "https://mcp.orthogonal.com"
+      "url": "https://mcp.orthogonal.com",
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "oauth",
+            "client": {
+              "mode": "dcr"
+            }
+          }
+        }
+      }
     }
   }
 }

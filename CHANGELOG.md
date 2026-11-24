@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.3 - 2026-11-24
+
+- Claude Code: give the hosted MCP server `"type": "http"` in `.mcp.json`. Without it Claude Code dropped the server at load, so installs got the skills but no MCP server.
+- Claude manifest: add the directory icon and documentation, support, privacy and terms links.
+- README: say what the plugin sends and fetches, and give example prompts.
+- Cursor keeps its url-only server config in `.cursor-mcp.json`, as its plugin docs show.
+- CI: run `claude plugin validate . --strict`.
+
 ## 0.3.2 - 2026-11-24
 
 - OpenAI OAuth asks for `profile email` only and turns OIDC off: Orthogonal's authorization server does not grant `openid` to dynamically registered clients.

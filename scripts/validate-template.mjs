@@ -92,8 +92,13 @@ for (const [surface, manifest] of Object.entries(manifests)) {
 const mcp = await readJson(".mcp.json");
 const servers = mcp.mcpServers ?? {};
 if (Object.keys(servers).length !== 1) errors.push(".mcp.json must define exactly one MCP server");
-if (JSON.stringify(servers.orthogonal) !== JSON.stringify({ url: expectedMcpUrl })) {
-  errors.push(".mcp.json must contain the Claude and Cursor hosted Orthogonal server");
+if (JSON.stringify(servers.orthogonal) !== JSON.stringify({ type: "http", url: expectedMcpUrl })) {
+  errors.push(".mcp.json must contain the Claude hosted Orthogonal server with type http");
+}
+
+const cursorMcp = await readJson(".cursor-mcp.json");
+if (Object.keys(cursorMcp.mcpServers ?? {}).length !== 1 || JSON.stringify(cursorMcp.mcpServers?.orthogonal) !== JSON.stringify({ url: expectedMcpUrl })) {
+  errors.push(".cursor-mcp.json must contain only the Cursor hosted Orthogonal server");
 }
 
 const codexMcp = await readJson(".codex-mcp.json");
@@ -103,7 +108,7 @@ if (JSON.stringify(codexMcp) !== JSON.stringify({ orthogonal: { url: expectedMcp
 if (manifests.codex.mcpServers !== "./.codex-mcp.json") {
   errors.push("Codex manifest must reference its direct MCP server map");
 }
-if (manifests.cursor.mcpServers !== "./.mcp.json") {
+if (manifests.cursor.mcpServers !== "./.cursor-mcp.json") {
   errors.push("Cursor manifest must reference the shared native MCP configuration");
 }
 

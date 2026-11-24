@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "orthogonal",
   "displayName": "Orthogonal",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Connect agents to paid APIs and live data from verified providers through Orthogonal's hosted MCP server.",
   "author": {
     "name": "Orthogonal",

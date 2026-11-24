@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "orthogonal",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Connect agents to paid APIs and live data from verified providers through Orthogonal's hosted MCP server.",
   "author": {
     "name": "Orthogonal",
@@ -22,7 +22,7 @@
       "interface": {
         "displayName": "Orthogonal",
         "shortDescription": "Live data and APIs for agents",
-        "longDescription": "Orthogonal gives ChatGPT and Codex one connection to paid APIs and live data from verified providers: people and company enrichment, web search and scraping, and more, without separate provider accounts or keys. Describe a task and Orthogonal finds matching endpoints and shows each one's parameters and exact price before anything runs. Running an endpoint spends credits already in your Orthogonal account, and you approve each paid call. Your account's balance and usage history stay visible at any time. For developers, Orthogonal also returns code to call the same endpoint from your own app. Requires an Orthogonal account. Results come from third-party providers and can vary by provider.",
+        "longDescription": "Orthogonal gives ChatGPT and Codex one connection to APIs and live data from verified providers: people and company enrichment, web search and scraping, and more, without separate provider accounts or keys. Describe a task and Orthogonal finds matching endpoints and shows what each one needs before anything runs. You approve each call that runs an endpoint, and your account's activity stays visible at any time. For developers, Orthogonal also returns code to call the same endpoint from your own app. Requires an Orthogonal account. Results come from third-party providers and can vary by provider.",
         "developerName": "Orthogonal",
         "category": "Developer Tools",
         "capabilities": [

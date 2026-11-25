@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.5 - 2026-11-25
+
+- `claude/assets/logo.png`: fill the symbol's two quarters with brand cream (#F7F6F1) instead of leaving them transparent. On Claude's dark pages the transparent quarters showed the dark background, so the directory icon read as a near-black square.
+
 ## 0.3.4 - 2026-11-24
 
 - Add `claude/`, the Claude plugin directory submission: only the Claude manifest, `.mcp.json`, icon, README and the `orthogonal` and `orthogonal-mcp` skills. The directory refuses scripts and other clients' files in the submitted folder, and the SDK skill reads `ORTHOGONAL_API_KEY`. `scripts/validate-template.mjs` keeps the copies equal to the originals.

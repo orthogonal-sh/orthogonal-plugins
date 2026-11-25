@@ -106,6 +106,22 @@ for (const file of ["skills/orthogonal/SKILL.md", "skills/orthogonal-mcp/SKILL.m
   if (a !== b) errors.push(`claude/${file} must equal ${file}`);
 }
 
+// hermes/ is the Hermes Agent catalog package: a portable Agent Plugins 1.0 package with no
+// client extensions (Hermes skips a server entry carrying extension fields), copies of the MCP skills.
+const hermesManifest = await readJson("hermes/plugin.json");
+const { extensions: _portableExtensions, ...portableWithoutExtensions } = manifests.portable;
+if (JSON.stringify(hermesManifest) !== JSON.stringify(portableWithoutExtensions)) errors.push("hermes/plugin.json must equal plugin.json without extensions");
+const hermesMcp = await readJson("hermes/mcp.json");
+if (JSON.stringify(hermesMcp) !== JSON.stringify({ $schema: expectedAgentMcpSchema, mcpServers: { orthogonal: { type: "streamable-http", url: expectedMcpUrl } } })) {
+  errors.push("hermes/mcp.json must contain only the plain portable Streamable HTTP Orthogonal server");
+}
+for (const file of ["skills/orthogonal/SKILL.md", "skills/orthogonal-mcp/SKILL.md", "LICENSE"]) {
+  const [a, b] = await Promise.all([readFile(path.join(root, file), "utf8"), readFile(path.join(root, "hermes", file), "utf8")]);
+  if (a !== b) errors.push(`hermes/${file} must equal ${file}`);
+}
+const hermesSkills = (await readdir(path.join(root, "hermes/skills"), { withFileTypes: true })).filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort();
+if (hermesSkills.join(",") !== "orthogonal,orthogonal-mcp") errors.push(`unexpected hermes/ skill set: ${hermesSkills.join(", ")}`);
+
 const cursorMcp = await readJson(".cursor-mcp.json");
 if (Object.keys(cursorMcp.mcpServers ?? {}).length !== 1 || JSON.stringify(cursorMcp.mcpServers?.orthogonal) !== JSON.stringify({ url: expectedMcpUrl })) {
   errors.push(".cursor-mcp.json must contain only the Cursor hosted Orthogonal server");

@@ -57,6 +57,37 @@ Reload Cursor after creating the link.
 
 Once the plugin is listed in Cursor's marketplace, open **Plugins** in Grok Bot, add **Orthogonal**, and select **Authorize** or **Authenticate**. Complete the Orthogonal sign-in in your browser and confirm the plugin appears under **Installed**.
 
+### Hermes Agent
+
+The repository root is a portable [Agent Plugins](https://agent-plugins.org/) package that [Hermes Agent](https://github.com/NousResearch/hermes-agent) loads as-is, with the four skills as `orthogonal:orthogonal`, `orthogonal:orthogonal-mcp`, `orthogonal:orthogonal-cli` and `orthogonal:orthogonal-sdk`. Install it from the plugin catalog, or straight from GitHub before the catalog entry lands, then enable it:
+
+```bash
+hermes plugins install orthogonal
+hermes plugins install orthogonal-sh/orthogonal-plugins --no-enable   # straight from GitHub
+hermes plugins enable orthogonal
+```
+
+Connect the MCP server and sign in to Orthogonal in your browser (OAuth with dynamic client registration; Hermes stores and refreshes the token in your profile):
+
+```bash
+hermes mcp add orthogonal --url https://mcp.orthogonal.com --auth oauth
+hermes mcp login orthogonal
+```
+
+Or use an API key from your Hermes profile instead of OAuth, in `~/.hermes/config.yaml`:
+
+```yaml
+mcp_servers:
+  orthogonal:
+    url: https://mcp.orthogonal.com
+    headers:
+      Authorization: "Bearer ${ORTHOGONAL_API_KEY}"
+```
+
+Start a new session and ask, for example, "Use Orthogonal to find an API that returns company data for a domain and show me its parameters and price."
+
+**Disclosure:** Orthogonal is a paid third-party API marketplace. The agent connects to `mcp.orthogonal.com`, sends your requests to Orthogonal and on to the provider that serves them, and each `use` / `batch_use` call spends your Orthogonal credits. `search`, `get_details`, `quote`, `batch_get_details` and `integrate` are free. The package itself runs no local code, hooks or background processes and stores no credentials. To have Hermes ask before every paid call, add `trust: untrusted` to `mcp_servers.orthogonal` in your config.
+
 ### Other MCP clients
 
 Point any Streamable HTTP MCP client at the hosted server:
